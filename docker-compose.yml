@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+  postgres:
+    build: './docker/postgres'
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'postgres'
+
+  backend:
+    build: 'backend/'
+    ports:
+      - '8000:8000'
+    depends_on:
+      - postgres
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      INTERNAL_API_SECRET: 'Y4jA6vZy'
+      POSTGRES_PRISMA_URL: 'postgresql://postgres:postgres@postgres:5432/postgres'
+      POSTGRES_URL_NON_POOLING: 'postgresql://postgres:postgres@postgres:5432/postgres'
+    volumes:
+      - ./backend/:/code/
+    command: ['bash', './run_dev.sh']

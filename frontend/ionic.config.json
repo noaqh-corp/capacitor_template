@@ -1,0 +1,7 @@
+{
+  "name": "drink",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}
